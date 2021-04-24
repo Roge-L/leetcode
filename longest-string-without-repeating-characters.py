@@ -1,3 +1,15 @@
+"""
+=== The Leetcode Journey ===
+Longest Substring Without Repeating Characters
+Roger Lam
+2021-04-23
+
+=== Question Description ===
+Given a string s, find the length of the longest substring without repeating characters.
+
+=== Solution Description ===
+Double pointer solution with n squared run time.
+"""
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         currSubString = {}

@@ -1,62 +1,48 @@
 """
 === The Leetcode Journey ===
-Longest Substring Without Repeating Characters
+Valid Parentheses
 Roger Lam
-2021-04-23
+2021-04-26
 
 === Question Description ===
-Given a string s, find the length of the longest substring without repeating characters.
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 
 === Solution Description ===
-Double pointer solution with n squared run time.
+Stack ADT implemented with a list; last in first out models valid parentheses well.
 """
 class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        currSubString = {}
-        currSubStringLen = 0
-        maxLen = 0
-        strlen = len(s)
-        i1 = 0
-        i2 = 0
+    def isValid(self, s: str) -> bool:
+        stack = []
+        n = len(s)
         
-        # Loop through every character
-        while i2 < strlen:
-            # Increase substring length and add to current substring if 
-            # current character not duplicate
-            if not s[i2] in currSubString.keys():
-                currSubString[s[i2]] = 1
-                currSubStringLen += 1
+        for i in range(n):
+            if s[i] == ")":
+                if not stack:
+                    return False
+                prevpar = stack.pop()
+                if prevpar != "(":
+                    return False
+            elif s[i] == "]":
+                if not stack:
+                    return False
+                prevpar = stack.pop()
+                if prevpar != "[":
+                    return False
+            elif s[i] == "}":
+                if not stack:
+                    return False
+                prevpar = stack.pop()
+                if prevpar != "{":
+                    return False
             else:
-                # Record old substring, possibly update max substring len
-                if maxLen < currSubStringLen:
-                    maxLen = currSubStringLen
-                currSubString = {}
-                currSubString[s[i2]] = 1
-                currSubStringLen = 1
-
-                # Work backwards in substring to check existence of valid
-                # substring
-                i1 = i2 - 1
-                duped = False
-                while not duped:
-                    if not s[i1] in currSubString.keys():
-                        currSubString[s[i1]] = 1
-                        currSubStringLen +=1
-                        i1 -= 1
-                    else:
-                        duped = True
-
-                i1 = i2
-
-            i2 += 1
+                stack.append(s[i])
             
-        # Case that no duplicate characters are found
-        if maxLen < currSubStringLen:
-            return currSubStringLen
-
-        return maxLen
+        if not stack:
+            return True
+            
+        return False
 
 solution = Solution()
-inputString = "dvdf"
-print("dvdf")
-print(solution.lengthOfLongestSubstring(inputString))
+inputString = "()[]{}"
+print("()[]{}")
+print(solution.isValid(inputString))

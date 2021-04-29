@@ -10,6 +10,7 @@ Given a string s, find the length of the longest substring without repeating cha
 === Solution Description ===
 Double pointer solution with n squared run time.
 """
+import math
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         currSubString = {}
